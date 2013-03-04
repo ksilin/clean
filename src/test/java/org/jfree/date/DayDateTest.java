@@ -1,14 +1,12 @@
 package org.jfree.date;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
 import java.util.Calendar;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 
 /**
@@ -65,7 +63,7 @@ public class DayDateTest {
     @Test
     public void testMondayPrecedingFriday9Nov2001() {
         DayDate mondayBefore = DayDate.getPreviousDayOfWeek(
-                Calendar.MONDAY, this.nov9Y2001
+                Day.MONDAY, this.nov9Y2001
         );
         assertEquals(5, mondayBefore.getDayOfMonth());
     }
@@ -76,7 +74,7 @@ public class DayDateTest {
     @Test
     public void testMondayFollowingFriday9Nov2001() {
         DayDate mondayAfter = DayDate.getFollowingDayOfWeek(
-                Calendar.MONDAY, this.nov9Y2001
+                Day.MONDAY, this.nov9Y2001
         );
         assertEquals(12, mondayAfter.getDayOfMonth());
     }
@@ -87,7 +85,7 @@ public class DayDateTest {
     @Test
     public void testMondayNearestFriday9Nov2001() {
         DayDate mondayNearest = DayDate.getNearestDayOfWeek(
-                Calendar.MONDAY, this.nov9Y2001
+                Day.MONDAY, this.nov9Y2001
         );
         assertEquals(12, mondayNearest.getDayOfMonth());
     }
@@ -98,19 +96,19 @@ public class DayDateTest {
     @Test
     public void testMondayNearest22Jan1970() {
         DayDate jan22Y1970 = DayDateFactory.makeDate(22, Month.JANUARY, 1970);
-        DayDate mondayNearest = DayDate.getNearestDayOfWeek(Calendar.MONDAY, jan22Y1970);
+        DayDate mondayNearest = DayDate.getNearestDayOfWeek(Day.MONDAY, jan22Y1970);
         assertEquals(19, mondayNearest.getDayOfMonth());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testMonthCodeToQuarterShouldThrowOn0(){
+    public void testMonthCodeToQuarterShouldThrowOn0() {
 
         Month.fromInt(0);
     }
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void testMonthCodeToQuarterShouldThrowOn13(){
+    public void testMonthCodeToQuarterShouldThrowOn13() {
 
         Month.fromInt(13);
     }
@@ -122,7 +120,7 @@ public class DayDateTest {
     @Test
     public void testWeekdayCodeToString() {
 
-        final String test = DayDate.weekdayCodeToString(Calendar.SATURDAY);
+        final String test = Day.fromInt(Calendar.SATURDAY).toString();
         assertEquals("Saturday", test);
     }
 
@@ -134,31 +132,29 @@ public class DayDateTest {
     @Test
     public void testStringToWeekday() {
 
-        int weekday = DayDate.stringToWeekdayCode("Wednesday");
-        assertEquals(DayDate.WEDNESDAY, weekday);
-
-        weekday = DayDate.stringToWeekdayCode("Wed");
-        assertEquals(DayDate.WEDNESDAY, weekday);
+        assertEquals(Day.WEDNESDAY, Day.parse("Wednesday"));
+        assertEquals(Day.WEDNESDAY, Day.parse("Wed"));
     }
 
     @Test
     public void stringToWeekdayShouldIgnoreWhitespace() {
 
-        int weekday = DayDate.stringToWeekdayCode(" Wednesday ");
-        assertEquals(Calendar.WEDNESDAY, weekday);
-
-        weekday = DayDate.stringToWeekdayCode(" Wed ");
-        assertEquals(Calendar.WEDNESDAY, weekday);
+        assertEquals(Day.WEDNESDAY, Day.parse(" Wednesday "));
+        assertEquals(Day.WEDNESDAY, Day.parse(" Wed "));
     }
 
     @Test
     public void stringToWeekdayShouldReturnNegativeOneForUnparseableStrings() {
-
-        int weekday = DayDate.stringToWeekdayCode("Wad");
-        assertEquals(-1, weekday);
-
-        weekday = DayDate.stringToWeekdayCode("Wadnesday");
-        assertEquals(-1, weekday);
+        try {
+            Day.parse("Wad");
+            fail("Invalid weekday code should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
+        try {
+            Day.parse("Wadnesday");
+            fail("Invalid weekday code should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
     }
 
     /**
@@ -223,7 +219,7 @@ public class DayDateTest {
     @Test
     public void testSerialization() {
 
-        DayDate d1 = DayDateFactory.makeDate(15,Month.APRIL, 2000);
+        DayDate d1 = DayDateFactory.makeDate(15, Month.APRIL, 2000);
         DayDate d2 = null;
 
         try {

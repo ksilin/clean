@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.GregorianCalendar;
 
 import static junit.framework.Assert.*;
+import static org.jfree.date.Day.*;
 import static org.jfree.date.DayDate.*;
 import static org.jfree.date.Month.*;
 
@@ -14,60 +15,73 @@ public class AdditionalSerialDateTest {
     @Test
     public void testIsValidWeekdayCode() throws Exception {
         for (int day = 1; day <= 7; day++)
-            assertTrue(isValidWeekdayCode(day));
-        assertFalse(isValidWeekdayCode(0));
-        assertFalse(isValidWeekdayCode(8));
+            Day.fromInt(day);
+
+        try {
+            Day.fromInt(0);
+            fail("Invalid day code should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
+        try {
+            Day.fromInt(8);
+            fail("Invalid day code should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
     }
 
     @Test
     public void testStringToWeekdayCode() throws Exception {
-        assertEquals(-1, stringToWeekdayCode("Hello"));
-        assertEquals(MONDAY, stringToWeekdayCode("Monday"));
-        assertEquals(MONDAY, stringToWeekdayCode("Mon"));
-        assertEquals(MONDAY, stringToWeekdayCode("monday"));
-        assertEquals(MONDAY, stringToWeekdayCode("MONDAY"));
-        assertEquals(MONDAY, stringToWeekdayCode("mon"));
-        assertEquals(TUESDAY, stringToWeekdayCode("Tuesday"));
-        assertEquals(TUESDAY, stringToWeekdayCode("Tue"));
-        assertEquals(TUESDAY, stringToWeekdayCode("tuesday"));
-        assertEquals(TUESDAY, stringToWeekdayCode("TUESDAY"));
-        assertEquals(TUESDAY, stringToWeekdayCode("tue"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("Wednesday"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("Wed"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("wednesday"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("WEDNESDAY"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("wed"));
-        assertEquals(THURSDAY, stringToWeekdayCode("Thursday"));
-        assertEquals(THURSDAY, stringToWeekdayCode("Thu"));
-        assertEquals(THURSDAY, stringToWeekdayCode("thursday"));
-        assertEquals(THURSDAY, stringToWeekdayCode("THURSDAY"));
-        assertEquals(THURSDAY, stringToWeekdayCode("thu"));
-        assertEquals(FRIDAY, stringToWeekdayCode("Friday"));
-        assertEquals(FRIDAY, stringToWeekdayCode("Fri"));
-        assertEquals(FRIDAY, stringToWeekdayCode("friday"));
-        assertEquals(FRIDAY, stringToWeekdayCode("FRIDAY"));
-        assertEquals(FRIDAY, stringToWeekdayCode("fri"));
-        assertEquals(SATURDAY, stringToWeekdayCode("Saturday"));
-        assertEquals(SATURDAY, stringToWeekdayCode("Sat"));
-        assertEquals(SATURDAY, stringToWeekdayCode("saturday"));
-        assertEquals(SATURDAY, stringToWeekdayCode("SATURDAY"));
-        assertEquals(SATURDAY, stringToWeekdayCode("sat"));
-        assertEquals(SUNDAY, stringToWeekdayCode("Sunday"));
-        assertEquals(SUNDAY, stringToWeekdayCode("Sun"));
-        assertEquals(SUNDAY, stringToWeekdayCode("sunday"));
-        assertEquals(SUNDAY, stringToWeekdayCode("SUNDAY"));
-        assertEquals(SUNDAY, stringToWeekdayCode("sun"));
+        try {
+            Day.parse("Hello");
+            fail("Invalid day code should throw exception");
+        } catch (IllegalArgumentException e) {
+        }
+        assertEquals(MONDAY, Day.parse("Monday"));
+        assertEquals(MONDAY, Day.parse("Mon"));
+        assertEquals(MONDAY, Day.parse("monday"));
+        assertEquals(MONDAY, Day.parse("MONDAY"));
+        assertEquals(MONDAY, Day.parse("mon"));
+        assertEquals(TUESDAY, Day.parse("Tuesday"));
+        assertEquals(TUESDAY, Day.parse("Tue"));
+        assertEquals(TUESDAY, Day.parse("tuesday"));
+        assertEquals(TUESDAY, Day.parse("TUESDAY"));
+        assertEquals(TUESDAY, Day.parse("tue"));
+        assertEquals(WEDNESDAY, Day.parse("Wednesday"));
+        assertEquals(WEDNESDAY, Day.parse("Wed"));
+        assertEquals(WEDNESDAY, Day.parse("wednesday"));
+        assertEquals(WEDNESDAY, Day.parse("WEDNESDAY"));
+        assertEquals(WEDNESDAY, Day.parse("wed"));
+        assertEquals(THURSDAY, Day.parse("Thursday"));
+        assertEquals(THURSDAY, Day.parse("Thu"));
+        assertEquals(THURSDAY, Day.parse("thursday"));
+        assertEquals(THURSDAY, Day.parse("THURSDAY"));
+        assertEquals(THURSDAY, Day.parse("thu"));
+        assertEquals(FRIDAY, Day.parse("Friday"));
+        assertEquals(FRIDAY, Day.parse("Fri"));
+        assertEquals(FRIDAY, Day.parse("friday"));
+        assertEquals(FRIDAY, Day.parse("FRIDAY"));
+        assertEquals(FRIDAY, Day.parse("fri"));
+        assertEquals(SATURDAY, Day.parse("Saturday"));
+        assertEquals(SATURDAY, Day.parse("Sat"));
+        assertEquals(SATURDAY, Day.parse("saturday"));
+        assertEquals(SATURDAY, Day.parse("SATURDAY"));
+        assertEquals(SATURDAY, Day.parse("sat"));
+        assertEquals(SUNDAY, Day.parse("Sunday"));
+        assertEquals(SUNDAY, Day.parse("Sun"));
+        assertEquals(SUNDAY, Day.parse("sunday"));
+        assertEquals(SUNDAY, Day.parse("SUNDAY"));
+        assertEquals(SUNDAY, Day.parse("sun"));
     }
 
     @Test
     public void testWeekdayCodeToString() throws Exception {
-        assertEquals("Sunday", weekdayCodeToString(SUNDAY));
-        assertEquals("Monday", weekdayCodeToString(MONDAY));
-        assertEquals("Tuesday", weekdayCodeToString(TUESDAY));
-        assertEquals("Wednesday", weekdayCodeToString(WEDNESDAY));
-        assertEquals("Thursday", weekdayCodeToString(THURSDAY));
-        assertEquals("Friday", weekdayCodeToString(FRIDAY));
-        assertEquals("Saturday", weekdayCodeToString(SATURDAY));
+        assertEquals("Sunday", SUNDAY.toString());
+        assertEquals("Monday", MONDAY.toString());
+        assertEquals("Tuesday", TUESDAY.toString());
+        assertEquals("Wednesday", WEDNESDAY.toString());
+        assertEquals("Thursday", THURSDAY.toString());
+        assertEquals("Friday", FRIDAY.toString());
+        assertEquals("Saturday", SATURDAY.toString());
     }
 
     @Test
@@ -172,11 +186,6 @@ public class AdditionalSerialDateTest {
         assertEquals(d(22, FEBRUARY, 2006), getPreviousDayOfWeek(WEDNESDAY, d(1, MARCH, 2006)));
         assertEquals(d(29, FEBRUARY, 2004), getPreviousDayOfWeek(SUNDAY, d(3, MARCH, 2004)));
         assertEquals(d(29, DECEMBER, 2004), getPreviousDayOfWeek(WEDNESDAY, d(5, JANUARY, 2005)));
-        try {
-            getPreviousDayOfWeek(-1, d(1, JANUARY, 2006));
-            fail("Invalid day of week code should throw exception");
-        } catch (IllegalArgumentException e) {
-        }
     }
 
     @Test
@@ -184,11 +193,6 @@ public class AdditionalSerialDateTest {
         assertEquals(d(1, JANUARY, 2005), getFollowingDayOfWeek(SATURDAY, d(25, DECEMBER, 2004)));
         assertEquals(d(1, JANUARY, 2005), getFollowingDayOfWeek(SATURDAY, d(26, DECEMBER, 2004)));
         assertEquals(d(3, MARCH, 2004), getFollowingDayOfWeek(WEDNESDAY, d(28, FEBRUARY, 2004)));
-        try {
-            getFollowingDayOfWeek(-1, d(1, JANUARY, 2006));
-            fail("Invalid day of week code should throw exception");
-        } catch (IllegalArgumentException e) {
-        }
     }
 
     @Test
@@ -250,11 +254,6 @@ public class AdditionalSerialDateTest {
         assertEquals(d(22, APRIL, 2006), getNearestDayOfWeek(SATURDAY, d(21, APRIL, 2006)));
         assertEquals(d(22, APRIL, 2006), getNearestDayOfWeek(SATURDAY, d(22, APRIL, 2006)));
 
-        try {
-            getNearestDayOfWeek(-1, d(1, JANUARY, 2006));
-            fail("Invalid day of week code should throw exception");
-        } catch (IllegalArgumentException e) {
-        }
     }
 
     @Test
