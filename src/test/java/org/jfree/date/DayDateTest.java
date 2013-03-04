@@ -25,7 +25,7 @@ public class DayDateTest {
      */
     @Before
     public void setUp() {
-        this.nov9Y2001 = DayDate.createInstance(9, MonthConstants.NOVEMBER, 2001);
+        this.nov9Y2001 = DayDate.createInstance(9, Month.NOVEMBER, 2001);
     }
 
     /**
@@ -34,7 +34,7 @@ public class DayDateTest {
     @Test
     public void testAddMonthsTo9Nov2001() {
         final DayDate jan9Y2002 = DayDate.addMonths(2, this.nov9Y2001);
-        final DayDate answer = DayDate.createInstance(9, 1, 2002);
+        final DayDate answer = DayDate.createInstance(9, Month.JANUARY, 2002);
         assertEquals(answer, jan9Y2002);
     }
 
@@ -43,9 +43,9 @@ public class DayDateTest {
      */
     @Test
     public void testAddMonthsTo5Oct2003() {
-        final DayDate d1 = DayDate.createInstance(5, MonthConstants.OCTOBER, 2003);
+        final DayDate d1 = DayDate.createInstance(5, Month.OCTOBER, 2003);
         final DayDate d2 = DayDate.addMonths(2, d1);
-        assertEquals(d2, DayDate.createInstance(5, MonthConstants.DECEMBER, 2003));
+        assertEquals(d2, DayDate.createInstance(5, Month.DECEMBER, 2003));
     }
 
     /**
@@ -53,7 +53,7 @@ public class DayDateTest {
      */
     @Test
     public void testAddMonthsTo1Jan2003() {
-        final DayDate d1 = DayDate.createInstance(1, MonthConstants.JANUARY, 2003);
+        final DayDate d1 = DayDate.createInstance(1, Month.JANUARY, 2003);
         final DayDate d2 = DayDate.addMonths(0, d1);
         assertEquals(d2, d1);
     }
@@ -96,7 +96,7 @@ public class DayDateTest {
      */
     @Test
     public void testMondayNearest22Jan1970() {
-        DayDate jan22Y1970 = DayDate.createInstance(22, MonthConstants.JANUARY, 1970);
+        DayDate jan22Y1970 = DayDate.createInstance(22, Month.JANUARY, 1970);
         DayDate mondayNearest = DayDate.getNearestDayOfWeek(Calendar.MONDAY, jan22Y1970);
         assertEquals(19, mondayNearest.getDayOfMonth());
     }
@@ -104,8 +104,8 @@ public class DayDateTest {
     @Test
     public void testMonthCodeToQuarter(){
 
-        assertEquals(1, DayDate.monthCodeToQuarter(DayDate.JANUARY));
-        assertEquals(4, DayDate.monthCodeToQuarter(DayDate.DECEMBER));
+        assertEquals(1, DayDate.monthCodeToQuarter(Month.JANUARY));
+        assertEquals(4, DayDate.monthCodeToQuarter(Month.DECEMBER));
     }
 
     @Test(expected = IllegalArgumentException.class)

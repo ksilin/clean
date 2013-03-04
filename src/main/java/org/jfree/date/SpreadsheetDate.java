@@ -98,7 +98,7 @@ public class SpreadsheetDate extends DayDate {
     /**
      * The month of the year (1 to 12).
      */
-    private int month;
+    private Month month;
 
     /**
      * The year (1900 to 9999).
@@ -117,7 +117,7 @@ public class SpreadsheetDate extends DayDate {
      * @param month the month (in the range 1 to 12).
      * @param year  the year (in the range 1900 to 9999).
      */
-    public SpreadsheetDate(final int day, final int month, final int year) {
+    public SpreadsheetDate(final int day, final Month month, final int year) {
 
         if ((year >= 1900) && (year <= 9999)) {
             this.year = year;
@@ -127,8 +127,8 @@ public class SpreadsheetDate extends DayDate {
             );
         }
 
-        if ((month >= MonthConstants.JANUARY)
-                && (month <= MonthConstants.DECEMBER)) {
+        if ((month.toInt() >= Month.JANUARY.toInt())
+                && (month.toInt() <= Month.DECEMBER.toInt())) {
             this.month = month;
         } else {
             throw new IllegalArgumentException(
@@ -143,7 +143,7 @@ public class SpreadsheetDate extends DayDate {
         }
 
         // the serial number needs to be synchronised with the day-month-year...
-        this.serial = calcSerial(day, month, year);
+        this.serial = calcSerial(day, month.toInt(), year);
 
         this.description = null;
 
@@ -208,7 +208,7 @@ public class SpreadsheetDate extends DayDate {
      */
     public Date toDate() {
         final Calendar calendar = Calendar.getInstance();
-        calendar.set(getYYYY(), getMonth() - 1, getDayOfMonth(), 0, 0, 0);
+        calendar.set(getYYYY(), getMonth().toInt() - 1, getDayOfMonth(), 0, 0, 0);
         return calendar.getTime();
     }
 
@@ -226,7 +226,7 @@ public class SpreadsheetDate extends DayDate {
      *
      * @return The month of the year.
      */
-    public int getMonth() {
+    public Month getMonth() {
         return this.month;
     }
 
@@ -474,11 +474,11 @@ public class SpreadsheetDate extends DayDate {
             mm = mm + 1;
             sss = ss2 + daysToEndOfPrecedingMonth[mm] - 1;
         }
-        this.month = mm - 1;
+        this.month = Month.fromInt(mm - 1);
 
         // what's left is d(+1);
         this.day = this.serial - ss2
-                - daysToEndOfPrecedingMonth[this.month] + 1;
+                - daysToEndOfPrecedingMonth[this.month.toInt()] + 1;
 
     }
 
