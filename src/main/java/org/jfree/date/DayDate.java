@@ -29,34 +29,36 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- *  An abstract class that defines our requirements for manipulating dates.
- *  <P>
- *  Requirement 1 : match at least what Excel does for dates;
- *  Requirement 2 : class is immutable;
- *  <P>
- *  Why not just use java.util.Date?  We will, when it makes sense.  At times,
- *  java.util.Date can be *too* precise - it represents an instant in time,
- *  accurate to 1/1000th of a second (with the date itself depending on the
- *  time-zone).  Sometimes we just want to represent a particular day (e.g. 21
- *  January 2015) without concerning ourselves about the time of day, or the
- *  time-zone, or anything else.  That's what we've defined DayDate for.
- *  <P>
- *  You can call getInstance() to get a concrete subclass of DayDate.
+ * An abstract class that defines our requirements for manipulating dates.
+ * <p/>
+ * Requirement 1 : match at least what Excel does for dates;
+ * Requirement 2 : class is immutable;
+ * <p/>
+ * Why not just use java.util.Date?  We will, when it makes sense.  At times,
+ * java.util.Date can be *too* precise - it represents an instant in time,
+ * accurate to 1/1000th of a second (with the date itself depending on the
+ * time-zone).  Sometimes we just want to represent a particular day (e.g. 21
+ * January 2015) without concerning ourselves about the time of day, or the
+ * time-zone, or anything else.  That's what we've defined DayDate for.
+ * <p/>
+ * You can call getInstance() to get a concrete subclass of DayDate.
  *
  * @author David Gilbert
  */
 public abstract class DayDate implements Comparable,
-        Serializable,
-        MonthConstants {
-
+        Serializable {
 
     public static final DateFormatSymbols
             DATE_FORMAT_SYMBOLS = new SimpleDateFormat().getDateFormatSymbols();
 
-    /** The serial number for 1 January 1900. */
+    /**
+     * The serial number for 1 January 1900.
+     */
     public static final int SERIAL_LOWER_BOUND = 2;
 
-    /** The serial number for 31 December 9999. */
+    /**
+     * The serial number for 31 December 9999.
+     */
     public static final int SERIAL_UPPER_BOUND = 2958465;
 
     public static final int MINIMUM_YEAR_SUPPORTED = 1900;
@@ -140,14 +142,13 @@ public abstract class DayDate implements Comparable,
      * Returns <code>true</code> if the supplied integer code represents a
      * valid day-of-the-week, and <code>false</code> otherwise.
      *
-     * @param code  the code being checked for validity.
-     *
+     * @param code the code being checked for validity.
      * @return <code>true</code> if the supplied integer code represents a
      *         valid day-of-the-week, and <code>false</code> otherwise.
      */
     public static boolean isValidWeekdayCode(final int code) {
 
-        switch(code) {
+        switch (code) {
             case SUNDAY:
             case MONDAY:
             case TUESDAY:
@@ -165,9 +166,8 @@ public abstract class DayDate implements Comparable,
     /**
      * Converts the supplied string to a day of the week.
      *
-     * @param s  a string representing the day of the week.
-     *
-     * @return <code>-1</code> if the string is not convertable, the day of 
+     * @param s a string representing the day of the week.
+     * @return <code>-1</code> if the string is not convertable, the day of
      *         the week otherwise.
      */
     public static int stringToWeekdayCode(String s) {
@@ -194,11 +194,10 @@ public abstract class DayDate implements Comparable,
 
     /**
      * Returns a string representing the supplied day-of-the-week.
-     * <P>
+     * <p/>
      * Need to find a better approach.
      *
-     * @param weekday  the day of the week.
-     *
+     * @param weekday the day of the week.
      * @return a string representing the supplied day-of-the-week.
      */
     public static String weekdayCodeToString(final int weekday) {
@@ -222,48 +221,16 @@ public abstract class DayDate implements Comparable,
     /**
      * Returns an array of month names.
      *
-     * @param shortened  a flag indicating that shortened month names should 
-     *                   be returned.
-     *
+     * @param shortened a flag indicating that shortened month names should
+     *                  be returned.
      * @return an array of month names.
      */
     public static String[] getMonths(final boolean shortened) {
 
         if (shortened) {
             return DATE_FORMAT_SYMBOLS.getShortMonths();
-        }
-        else {
+        } else {
             return DATE_FORMAT_SYMBOLS.getMonths();
-        }
-
-    }
-
-    /**
-     * Returns true if the supplied integer code represents a valid month.
-     *
-     * @param code  the code being checked for validity.
-     *
-     * @return <code>true</code> if the supplied integer code represents a 
-     *         valid month.
-     */
-    public static boolean isValidMonthCode(final int code) {
-
-        switch(code) {
-            case JANUARY:
-            case FEBRUARY:
-            case MARCH:
-            case APRIL:
-            case MAY:
-            case JUNE:
-            case JULY:
-            case AUGUST:
-            case SEPTEMBER:
-            case OCTOBER:
-            case NOVEMBER:
-            case DECEMBER:
-                return true;
-            default:
-                return false;
         }
 
     }
@@ -271,90 +238,43 @@ public abstract class DayDate implements Comparable,
     /**
      * Returns the quarter for the specified month.
      *
-     * @param code  the month code (1-12).
-     *
+     * @param month the month code (1-12).
      * @return the quarter that the month belongs to.
      */
-    public static int monthCodeToQuarter(final int code) {
+    public static int monthCodeToQuarter(final Month month) {
 
-        switch(code) {
+        switch (month) {
             case JANUARY:
             case FEBRUARY:
-            case MARCH: return 1;
+            case MARCH:
+                return 1;
             case APRIL:
             case MAY:
-            case JUNE: return 2;
+            case JUNE:
+                return 2;
             case JULY:
             case AUGUST:
-            case SEPTEMBER: return 3;
+            case SEPTEMBER:
+                return 3;
             case OCTOBER:
             case NOVEMBER:
-            case DECEMBER: return 4;
-            default: throw new IllegalArgumentException(
-                    "DayDate.monthCodeToQuarter: invalid month code.");
+            case DECEMBER:
+                return 4;
+            default:
+                throw new IllegalArgumentException(
+                        "DayDate.monthCodeToQuarter: invalid month code.");
         }
-
-    }
-
-    /**
-     * Returns a string representing the supplied month.
-     * <P>
-     * The string returned is the long form of the month name taken from the 
-     * default locale.
-     *
-     * @param month  the month.
-     *
-     * @return a string representing the supplied month.
-     */
-    public static String monthCodeToString(final int month) {
-
-        return monthCodeToString(month, false);
-
-    }
-
-    /**
-     * Returns a string representing the supplied month.
-     * <P>
-     * The string returned is the long or short form of the month name taken 
-     * from the default locale.
-     *
-     * @param month  the month.
-     * @param shortened  if <code>true</code> return the abbreviation of the 
-     *                   month.
-     *
-     * @return a string representing the supplied month.
-     */
-    public static String monthCodeToString(final int month,
-                                           final boolean shortened) {
-
-        // check arguments...
-        if (!isValidMonthCode(month)) {
-            throw new IllegalArgumentException(
-                    "DayDate.monthCodeToString: month outside valid range.");
-        }
-
-        final String[] months;
-
-        if (shortened) {
-            months = DATE_FORMAT_SYMBOLS.getShortMonths();
-        }
-        else {
-            months = DATE_FORMAT_SYMBOLS.getMonths();
-        }
-
-        return months[month - 1];
 
     }
 
     /**
      * Converts a string to a month code.
-     * <P>
-     * This method will return one of the constants JANUARY, FEBRUARY, ..., 
-     * DECEMBER that corresponds to the string.  If the string is not 
+     * <p/>
+     * This method will return one of the constants JANUARY, FEBRUARY, ...,
+     * DECEMBER that corresponds to the string.  If the string is not
      * recognised, this method returns -1.
      *
-     * @param s  the string to parse.
-     *
+     * @param s the string to parse.
      * @return <code>-1</code> if the string is not parseable, the month of the
      *         year otherwise.
      */
@@ -369,8 +289,7 @@ public abstract class DayDate implements Comparable,
         // first try parsing the string as an integer (1-12)...
         try {
             result = Integer.parseInt(s);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             // suppress
         }
 
@@ -393,22 +312,24 @@ public abstract class DayDate implements Comparable,
     }
 
     /**
-     * Returns true if the supplied integer code represents a valid 
+     * Returns true if the supplied integer code represents a valid
      * week-in-the-month, and false otherwise.
      *
-     * @param code  the code being checked for validity.
-     * @return <code>true</code> if the supplied integer code represents a 
+     * @param code the code being checked for validity.
+     * @return <code>true</code> if the supplied integer code represents a
      *         valid week-in-the-month.
      */
     public static boolean isValidWeekInMonthCode(final int code) {
 
-        switch(code) {
+        switch (code) {
             case FIRST_WEEK_IN_MONTH:
             case SECOND_WEEK_IN_MONTH:
             case THIRD_WEEK_IN_MONTH:
             case FOURTH_WEEK_IN_MONTH:
-            case LAST_WEEK_IN_MONTH: return true;
-            default: return false;
+            case LAST_WEEK_IN_MONTH:
+                return true;
+            default:
+                return false;
         }
 
     }
@@ -416,35 +337,30 @@ public abstract class DayDate implements Comparable,
     /**
      * Determines whether or not the specified year is a leap year.
      *
-     * @param yyyy  the year (in the range 1900 to 9999).
-     *
+     * @param yyyy the year (in the range 1900 to 9999).
      * @return <code>true</code> if the specified year is a leap year.
      */
     public static boolean isLeapYear(final int yyyy) {
 
         if ((yyyy % 4) != 0) {
             return false;
-        }
-        else if ((yyyy % 400) == 0) {
+        } else if ((yyyy % 400) == 0) {
             return true;
-        }
-        else if ((yyyy % 100) == 0) {
+        } else if ((yyyy % 100) == 0) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
 
     }
 
     /**
-     * Returns the number of leap years from 1900 to the specified year 
+     * Returns the number of leap years from 1900 to the specified year
      * INCLUSIVE.
-     * <P>
+     * <p/>
      * Note that 1900 is not a leap year.
      *
-     * @param yyyy  the year (in the range 1900 to 9999).
-     *
+     * @param yyyy the year (in the range 1900 to 9999).
      * @return the number of leap years from 1900 to the specified year.
      */
     public static int leapYearCount(final int yyyy) {
@@ -457,36 +373,32 @@ public abstract class DayDate implements Comparable,
     }
 
     /**
-     * Returns the number of the last day of the month, taking into account 
+     * Returns the number of the last day of the month, taking into account
      * leap years.
      *
-     * @param month  the month.
+     * @param month the month.
      * @param yyyy  the year (in the range 1900 to 9999).
-     *
      * @return the number of the last day of the month.
      */
-    public static int lastDayOfMonth(final int month, final int yyyy) {
+    public static int lastDayOfMonth(final Month month, final int yyyy) {
 
-        final int result = LAST_DAY_OF_MONTH[month];
-        if (month != FEBRUARY) {
+        final int result = LAST_DAY_OF_MONTH[month.getIndex()];
+        if (month != Month.FEBRUARY) {
             return result;
-        }
-        else if (isLeapYear(yyyy)) {
+        } else if (isLeapYear(yyyy)) {
             return result + 1;
-        }
-        else {
+        } else {
             return result;
         }
 
     }
 
     /**
-     * Creates a new date by adding the specified number of days to the base 
+     * Creates a new date by adding the specified number of days to the base
      * date.
      *
-     * @param days  the number of days to add (can be negative).
-     * @param base  the base date.
-     *
+     * @param days the number of days to add (can be negative).
+     * @param base the base date.
      * @return a new date.
      */
     public static DayDate addDays(final int days, final DayDate base) {
@@ -497,44 +409,42 @@ public abstract class DayDate implements Comparable,
     }
 
     /**
-     * Creates a new date by adding the specified number of months to the base 
+     * Creates a new date by adding the specified number of months to the base
      * date.
-     * <P>
+     * <p/>
      * If the base date is close to the end of the month, the day on the result
      * may be adjusted slightly:  31 May + 1 month = 30 June.
      *
-     * @param months  the number of months to add (can be negative).
-     * @param base  the base date.
-     *
+     * @param months the number of months to add (can be negative).
+     * @param base   the base date.
      * @return a new date.
      */
     public static DayDate addMonths(final int months,
-                                       final DayDate base) {
+                                    final DayDate base) {
 
-        final int yy = (12 * base.getYYYY() + base.getMonth() + months - 1)
+        final int yy = (12 * base.getYYYY() + base.getMonth().getIndex() + months - 1)
                 / 12;
-        final int mm = (12 * base.getYYYY() + base.getMonth() + months - 1)
+        final int mm = (12 * base.getYYYY() + base.getMonth().getIndex() + months - 1)
                 % 12 + 1;
         final int dd = Math.min(
-                base.getDayOfMonth(), DayDate.lastDayOfMonth(mm, yy)
+                base.getDayOfMonth(), DayDate.lastDayOfMonth(Month.make(mm), yy)
         );
-        return DayDate.createInstance(dd, mm, yy);
+        return DayDate.createInstance(dd, Month.make(mm), yy);
 
     }
 
     /**
-     * Creates a new date by adding the specified number of years to the base 
+     * Creates a new date by adding the specified number of years to the base
      * date.
      *
-     * @param years  the number of years to add (can be negative).
+     * @param years the number of years to add (can be negative).
      * @param base  the base date.
-     *
      * @return A new date.
      */
     public static DayDate addYears(final int years, final DayDate base) {
 
         final int baseY = base.getYYYY();
-        final int baseM = base.getMonth();
+        final Month baseM = base.getMonth();
         final int baseD = base.getDayOfMonth();
 
         final int targetY = baseY + years;
@@ -547,17 +457,16 @@ public abstract class DayDate implements Comparable,
     }
 
     /**
-     * Returns the latest date that falls on the specified day-of-the-week and 
+     * Returns the latest date that falls on the specified day-of-the-week and
      * is BEFORE the base date.
      *
-     * @param targetWeekday  a code for the target day-of-the-week.
-     * @param base  the base date.
-     *
-     * @return the latest date that falls on the specified day-of-the-week and 
+     * @param targetWeekday a code for the target day-of-the-week.
+     * @param base          the base date.
+     * @return the latest date that falls on the specified day-of-the-week and
      *         is BEFORE the base date.
      */
     public static DayDate getPreviousDayOfWeek(final int targetWeekday,
-                                                  final DayDate base) {
+                                               final DayDate base) {
 
         // check arguments...
         if (!DayDate.isValidWeekdayCode(targetWeekday)) {
@@ -571,8 +480,7 @@ public abstract class DayDate implements Comparable,
         final int baseDOW = base.getDayOfWeek();
         if (baseDOW > targetWeekday) {
             adjust = Math.min(0, targetWeekday - baseDOW);
-        }
-        else {
+        } else {
             adjust = -7 + Math.max(0, targetWeekday - baseDOW);
         }
 
@@ -584,14 +492,13 @@ public abstract class DayDate implements Comparable,
      * Returns the earliest date that falls on the specified day-of-the-week
      * and is AFTER the base date.
      *
-     * @param targetWeekday  a code for the target day-of-the-week.
-     * @param base  the base date.
-     *
-     * @return the earliest date that falls on the specified day-of-the-week 
+     * @param targetWeekday a code for the target day-of-the-week.
+     * @param base          the base date.
+     * @return the earliest date that falls on the specified day-of-the-week
      *         and is AFTER the base date.
      */
     public static DayDate getFollowingDayOfWeek(final int targetWeekday,
-                                                   final DayDate base) {
+                                                final DayDate base) {
 
         // check arguments...
         if (!DayDate.isValidWeekdayCode(targetWeekday)) {
@@ -605,8 +512,7 @@ public abstract class DayDate implements Comparable,
         final int baseDOW = base.getDayOfWeek();
         if (baseDOW >= targetWeekday) {
             adjust = 7 + Math.min(0, targetWeekday - baseDOW);
-        }
-        else {
+        } else {
             adjust = Math.max(0, targetWeekday - baseDOW);
         }
 
@@ -617,14 +523,13 @@ public abstract class DayDate implements Comparable,
      * Returns the date that falls on the specified day-of-the-week and is
      * CLOSEST to the base date.
      *
-     * @param targetDOW  a code for the target day-of-the-week.
-     * @param base  the base date.
-     *
-     * @return the date that falls on the specified day-of-the-week and is 
+     * @param targetDOW a code for the target day-of-the-week.
+     * @param base      the base date.
+     * @return the date that falls on the specified day-of-the-week and is
      *         CLOSEST to the base date.
      */
     public static DayDate getNearestDayOfWeek(final int targetDOW,
-                                                 final DayDate base) {
+                                              final DayDate base) {
 
         // check arguments...
         if (!DayDate.isValidWeekdayCode(targetDOW)) {
@@ -647,8 +552,7 @@ public abstract class DayDate implements Comparable,
     /**
      * Rolls the date forward to the last day of the month.
      *
-     * @param base  the base date.
-     *
+     * @param base the base date.
      * @return a new serial date.
      */
     public DayDate getEndOfCurrentMonth(final DayDate base) {
@@ -660,11 +564,10 @@ public abstract class DayDate implements Comparable,
 
     /**
      * Returns a string corresponding to the week-in-the-month code.
-     * <P>
+     * <p/>
      * Need to find a better approach.
      *
-     * @param count  an integer code representing the week-in-the-month.
-     *
+     * @param count an integer code representing the week-in-the-month.
      * @return a string corresponding to the week-in-the-month code.
      */
     public static String weekInMonthToString(final int count) {
@@ -690,11 +593,10 @@ public abstract class DayDate implements Comparable,
 
     /**
      * Returns a string representing the supplied 'relative'.
-     * <P>
+     * <p/>
      * Need to find a better approach.
      *
-     * @param relative  a constant representing the 'relative'.
-     *
+     * @param relative a constant representing the 'relative'.
      * @return a string representing the supplied 'relative'.
      */
     public static String relativeToString(final int relative) {
@@ -715,26 +617,24 @@ public abstract class DayDate implements Comparable,
     }
 
     /**
-     * Factory method that returns an instance of some concrete subclass of 
+     * Factory method that returns an instance of some concrete subclass of
      * {@link DayDate}.
      *
-     * @param day  the day (1-31).
-     * @param month  the month (1-12).
+     * @param day   the day (1-31).
+     * @param month the month (1-12).
      * @param yyyy  the year (in the range 1900 to 9999).
-     *
      * @return An instance of {@link DayDate}.
      */
-    public static DayDate createInstance(final int day, final int month,
-                                            final int yyyy) {
+    public static DayDate createInstance(final int day, final Month month,
+                                         final int yyyy) {
         return new SpreadsheetDate(day, month, yyyy);
     }
 
     /**
-     * Factory method that returns an instance of some concrete subclass of 
+     * Factory method that returns an instance of some concrete subclass of
      * {@link DayDate}.
      *
-     * @param serial  the serial number for the day (1 January 1900 = 2).
-     *
+     * @param serial the serial number for the day (1 January 1900 = 2).
      * @return a instance of DayDate.
      */
     public static DayDate createInstance(final int serial) {
@@ -744,8 +644,7 @@ public abstract class DayDate implements Comparable,
     /**
      * Factory method that returns an instance of a subclass of DayDate.
      *
-     * @param date  A Java date object.
-     *
+     * @param date A Java date object.
      * @return a instance of DayDate.
      */
     public static DayDate createInstance(final java.util.Date date) {
@@ -753,7 +652,7 @@ public abstract class DayDate implements Comparable,
         final GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         return new SpreadsheetDate(calendar.get(Calendar.DATE),
-                calendar.get(Calendar.MONTH) + 1,
+                Month.make(calendar.get(Calendar.MONTH) + 1),
                 calendar.get(Calendar.YEAR));
 
     }
@@ -787,7 +686,7 @@ public abstract class DayDate implements Comparable,
     /**
      * Sets the description for the date.
      *
-     * @param description  the new description for the date.
+     * @param description the new description for the date.
      */
     public void setDescription(final String description) {
         this.description = description;
@@ -796,10 +695,10 @@ public abstract class DayDate implements Comparable,
     /**
      * Converts the date to a string.
      *
-     * @return  a string representation of the date.
+     * @return a string representation of the date.
      */
     public String toString() {
-        return getDayOfMonth() + "-" + DayDate.monthCodeToString(getMonth())
+        return getDayOfMonth() + "-" + getMonth()
                 + "-" + getYYYY();
     }
 
@@ -815,7 +714,7 @@ public abstract class DayDate implements Comparable,
      *
      * @return the month of the year.
      */
-    public abstract int getMonth();
+    public abstract Month getMonth();
 
     /**
      * Returns the day of the month.
@@ -832,14 +731,13 @@ public abstract class DayDate implements Comparable,
     public abstract int getDayOfWeek();
 
     /**
-     * Returns the difference (in days) between this date and the specified 
+     * Returns the difference (in days) between this date and the specified
      * 'other' date.
-     * <P>
+     * <p/>
      * The result is positive if this date is after the 'other' date and
      * negative if it is before the 'other' date.
      *
-     * @param other  the date being compared to.
-     *
+     * @param other the date being compared to.
      * @return the difference between this and the other date.
      */
     public abstract int compare(DayDate other);
@@ -848,8 +746,7 @@ public abstract class DayDate implements Comparable,
      * Returns true if this DayDate represents the same date as the
      * specified DayDate.
      *
-     * @param other  the date being compared to.
-     *
+     * @param other the date being compared to.
      * @return <code>true</code> if this DayDate represents the same date as
      *         the specified DayDate.
      */
@@ -859,8 +756,7 @@ public abstract class DayDate implements Comparable,
      * Returns true if this DayDate represents an earlier date compared to
      * the specified DayDate.
      *
-     * @param other  The date being compared to.
-     *
+     * @param other The date being compared to.
      * @return <code>true</code> if this DayDate represents an earlier date
      *         compared to the specified DayDate.
      */
@@ -870,8 +766,7 @@ public abstract class DayDate implements Comparable,
      * Returns true if this DayDate represents the same date as the
      * specified DayDate.
      *
-     * @param other  the date being compared to.
-     *
+     * @param other the date being compared to.
      * @return <code>true<code> if this DayDate represents the same date
      *         as the specified DayDate.
      */
@@ -881,8 +776,7 @@ public abstract class DayDate implements Comparable,
      * Returns true if this DayDate represents the same date as the
      * specified DayDate.
      *
-     * @param other  the date being compared to.
-     *
+     * @param other the date being compared to.
      * @return <code>true</code> if this DayDate represents the same date
      *         as the specified DayDate.
      */
@@ -892,8 +786,7 @@ public abstract class DayDate implements Comparable,
      * Returns true if this DayDate represents the same date as the
      * specified DayDate.
      *
-     * @param other  the date being compared to.
-     *
+     * @param other the date being compared to.
      * @return <code>true</code> if this DayDate represents the same date
      *         as the specified DayDate.
      */
@@ -901,26 +794,24 @@ public abstract class DayDate implements Comparable,
 
     /**
      * Returns <code>true</code> if this {@link DayDate} is within the
-     * specified range (INCLUSIVE).  The date order of d1 and d2 is not 
+     * specified range (INCLUSIVE).  The date order of d1 and d2 is not
      * important.
      *
-     * @param d1  a boundary date for the range.
-     * @param d2  the other boundary date for the range.
-     *
+     * @param d1 a boundary date for the range.
+     * @param d2 the other boundary date for the range.
      * @return A boolean.
      */
     public abstract boolean isInRange(DayDate d1, DayDate d2);
 
     /**
      * Returns <code>true</code> if this {@link DayDate} is within the
-     * specified range (caller specifies whether or not the end-points are 
+     * specified range (caller specifies whether or not the end-points are
      * included).  The date order of d1 and d2 is not important.
      *
-     * @param d1  a boundary date for the range.
-     * @param d2  the other boundary date for the range.
-     * @param include  a code that controls whether or not the start and end 
-     *                 dates are included in the range.
-     *
+     * @param d1      a boundary date for the range.
+     * @param d2      the other boundary date for the range.
+     * @param include a code that controls whether or not the start and end
+     *                dates are included in the range.
      * @return A boolean.
      */
     public abstract boolean isInRange(DayDate d1, DayDate d2,
@@ -930,8 +821,7 @@ public abstract class DayDate implements Comparable,
      * Returns the latest date that falls on the specified day-of-the-week and
      * is BEFORE this date.
      *
-     * @param targetDOW  a code for the target day-of-the-week.
-     *
+     * @param targetDOW a code for the target day-of-the-week.
      * @return the latest date that falls on the specified day-of-the-week and
      *         is BEFORE this date.
      */
@@ -943,8 +833,7 @@ public abstract class DayDate implements Comparable,
      * Returns the earliest date that falls on the specified day-of-the-week
      * and is AFTER this date.
      *
-     * @param targetDOW  a code for the target day-of-the-week.
-     *
+     * @param targetDOW a code for the target day-of-the-week.
      * @return the earliest date that falls on the specified day-of-the-week
      *         and is AFTER this date.
      */
@@ -955,8 +844,7 @@ public abstract class DayDate implements Comparable,
     /**
      * Returns the nearest date that falls on the specified day-of-the-week.
      *
-     * @param targetDOW  a code for the target day-of-the-week.
-     *
+     * @param targetDOW a code for the target day-of-the-week.
      * @return the nearest date that falls on the specified day-of-the-week.
      */
     public DayDate getNearestDayOfWeek(final int targetDOW) {
