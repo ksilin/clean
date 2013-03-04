@@ -17,12 +17,12 @@ public class SpreadsheetDateTest {
     /**
      * Date representing 1 January 1900.
      */
-    private SerialDate jan1Y1900;
+    private DayDate jan1Y1900;
 
     /**
      * Date representing serial day number 2.
      */
-    private SerialDate s2;
+    private DayDate s2;
 
     /**
      * Setup.
@@ -47,7 +47,7 @@ public class SpreadsheetDateTest {
      */
     @Test
     public void test12Nov2001GetDayOfWeek() {
-        final SerialDate nov12Y2001 = new SpreadsheetDate(12, MonthConstants.NOVEMBER, 2001);
+        final DayDate nov12Y2001 = new SpreadsheetDate(12, MonthConstants.NOVEMBER, 2001);
         final int dayOfWeek = nov12Y2001.getDayOfWeek();
         assertEquals(Calendar.MONDAY, dayOfWeek);
     }

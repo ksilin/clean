@@ -46,7 +46,7 @@ package org.jfree.date;
  * Useful constants for months.  Note that these are NOT equivalent to the
  * constants defined by java.util.Calendar (where JANUARY=0 and DECEMBER=11).
  * <p/>
- * Used by the SerialDate and RegularTimePeriod classes.
+ * Used by the DayDate and RegularTimePeriod classes.
  *
  * @author David Gilbert
  */
