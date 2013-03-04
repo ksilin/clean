@@ -26,7 +26,6 @@ import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * An abstract class that defines our requirements for manipulating dates.
@@ -190,38 +189,6 @@ public abstract class DayDate implements Comparable,
 
         final String[] weekdays = DATE_FORMAT_SYMBOLS.getWeekdays();
         return weekdays[weekday];
-
-    }
-
-    /**
-     * Returns the quarter for the specified month.
-     *
-     * @param month the month code (1-12).
-     * @return the quarter that the month belongs to.
-     */
-    public static int monthCodeToQuarter(final Month month) {
-
-        switch (month) {
-            case JANUARY:
-            case FEBRUARY:
-            case MARCH:
-                return 1;
-            case APRIL:
-            case MAY:
-            case JUNE:
-                return 2;
-            case JULY:
-            case AUGUST:
-            case SEPTEMBER:
-                return 3;
-            case OCTOBER:
-            case NOVEMBER:
-            case DECEMBER:
-                return 4;
-            default:
-                throw new IllegalArgumentException(
-                        "DayDate.monthCodeToQuarter: invalid month code.");
-        }
 
     }
 

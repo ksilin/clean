@@ -3,6 +3,7 @@ package org.jfree.date;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.jfree.date.Month.*;
 
@@ -27,20 +28,21 @@ public class MonthTest {
         Month.fromInt(13);
     }
 
+
     @Test
-    public void testMonthToQuarter() throws Exception {
-        Assert.assertEquals(1, DayDate.monthCodeToQuarter(Month.JANUARY));
-        Assert.assertEquals(1, DayDate.monthCodeToQuarter(Month.FEBRUARY));
-        Assert.assertEquals(1, DayDate.monthCodeToQuarter(Month.MARCH));
-        Assert.assertEquals(2, DayDate.monthCodeToQuarter(Month.APRIL));
-        Assert.assertEquals(2, DayDate.monthCodeToQuarter(Month.MAY));
-        Assert.assertEquals(2, DayDate.monthCodeToQuarter(Month.JUNE));
-        Assert.assertEquals(3, DayDate.monthCodeToQuarter(Month.JULY));
-        Assert.assertEquals(3, DayDate.monthCodeToQuarter(Month.AUGUST));
-        Assert.assertEquals(3, DayDate.monthCodeToQuarter(Month.SEPTEMBER));
-        Assert.assertEquals(4, DayDate.monthCodeToQuarter(Month.OCTOBER));
-        Assert.assertEquals(4, DayDate.monthCodeToQuarter(Month.NOVEMBER));
-        Assert.assertEquals(4, DayDate.monthCodeToQuarter(Month.DECEMBER));
+    public void testQuarter() throws Exception {
+        Assert.assertEquals(1, Month.JANUARY.quarter());
+        Assert.assertEquals(1, Month.FEBRUARY.quarter());
+        Assert.assertEquals(1, Month.MARCH.quarter());
+        Assert.assertEquals(2, Month.APRIL.quarter());
+        Assert.assertEquals(2, Month.MAY.quarter());
+        Assert.assertEquals(2, Month.JUNE.quarter());
+        Assert.assertEquals(3, Month.JULY.quarter());
+        Assert.assertEquals(3, Month.AUGUST.quarter());
+        Assert.assertEquals(3, Month.SEPTEMBER.quarter());
+        Assert.assertEquals(4, Month.OCTOBER.quarter());
+        Assert.assertEquals(4, Month.NOVEMBER.quarter());
+        Assert.assertEquals(4, Month.DECEMBER.quarter());
     }
 
     @Test
