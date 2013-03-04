@@ -1,5 +1,6 @@
 package org.jfree.date;
 
+import junit.framework.Assert;
 import org.junit.Test;
 
 import java.util.GregorianCalendar;
@@ -67,151 +68,6 @@ public class AdditionalSerialDateTest {
         assertEquals("Thursday", weekdayCodeToString(THURSDAY));
         assertEquals("Friday", weekdayCodeToString(FRIDAY));
         assertEquals("Saturday", weekdayCodeToString(SATURDAY));
-    }
-
-    @Test
-    public void testIsValidMonthCode() throws Exception {
-        for (int i = 1; i <= 12; i++) {
-            Month.fromInt(i);
-        }
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testInvalidMonthCode() throws Exception {
-        Month.fromInt(0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testInvalidMonthCode2() throws Exception {
-        Month.fromInt(13);
-    }
-
-    @Test
-    public void testMonthToQuarter() throws Exception {
-        assertEquals(1, monthCodeToQuarter(Month.JANUARY));
-        assertEquals(1, monthCodeToQuarter(Month.FEBRUARY));
-        assertEquals(1, monthCodeToQuarter(Month.MARCH));
-        assertEquals(2, monthCodeToQuarter(Month.APRIL));
-        assertEquals(2, monthCodeToQuarter(Month.MAY));
-        assertEquals(2, monthCodeToQuarter(Month.JUNE));
-        assertEquals(3, monthCodeToQuarter(Month.JULY));
-        assertEquals(3, monthCodeToQuarter(Month.AUGUST));
-        assertEquals(3, monthCodeToQuarter(Month.SEPTEMBER));
-        assertEquals(4, monthCodeToQuarter(Month.OCTOBER));
-        assertEquals(4, monthCodeToQuarter(Month.NOVEMBER));
-        assertEquals(4, monthCodeToQuarter(Month.DECEMBER));
-    }
-
-    @Test
-    public void testMonthCodeToString() throws Exception {
-        assertEquals("January", JANUARY.toString());
-        assertEquals("February", FEBRUARY.toString());
-        assertEquals("March", MARCH.toString());
-        assertEquals("April", APRIL.toString());
-        assertEquals("May", MAY.toString());
-        assertEquals("June", JUNE.toString());
-        assertEquals("July", JULY.toString());
-        assertEquals("August", AUGUST.toString());
-        assertEquals("September", SEPTEMBER.toString());
-        assertEquals("October", OCTOBER.toString());
-        assertEquals("November", NOVEMBER.toString());
-        assertEquals("December", DECEMBER.toString());
-        assertEquals("Jan", JANUARY.toShortString());
-        assertEquals("Feb", FEBRUARY.toShortString());
-        assertEquals("Mar", MARCH.toShortString());
-        assertEquals("Apr", APRIL.toShortString());
-        assertEquals("May", MAY.toShortString());
-        assertEquals("Jun", JUNE.toShortString());
-        assertEquals("Jul", JULY.toShortString());
-        assertEquals("Aug", AUGUST.toShortString());
-        assertEquals("Sep", SEPTEMBER.toShortString());
-        assertEquals("Oct", OCTOBER.toShortString());
-        assertEquals("Nov", NOVEMBER.toShortString());
-        assertEquals("Dec", DECEMBER.toShortString());
-//        try {
-//            (-1);
-//            fail("Invalid month code should throw exception");
-//        } catch (IllegalArgumentException e) {
-//        }
-    }
-
-    @Test
-    public void testMonthParse() throws Exception {
-        assertEquals(JANUARY, Month.parse("1"));
-        assertEquals(FEBRUARY,  Month.parse("2"));
-        assertEquals(MARCH,  Month.parse("3"));
-        assertEquals(APRIL,  Month.parse("4"));
-        assertEquals(MAY,  Month.parse("5"));
-        assertEquals(JUNE,  Month.parse("6"));
-        assertEquals(JULY,  Month.parse("7"));
-        assertEquals(AUGUST,  Month.parse("8"));
-        assertEquals(SEPTEMBER,  Month.parse("9"));
-        assertEquals(OCTOBER,  Month.parse("10"));
-        assertEquals(NOVEMBER,  Month.parse("11"));
-        assertEquals(DECEMBER,  Month.parse("12"));
-//        assertEquals(-1, Month.parse("0"));
-//        assertEquals(-1, Month.parse("13"));
-//        assertEquals(-1, Month.parse("Hello"));
-        for (Month m : Month.values()) {
-            assertEquals(m, Month.parse(m.toString()));
-            assertEquals(m, Month.parse(m.toString()));
-        }
-        assertEquals(JANUARY,  Month.parse("jan"));
-        assertEquals(FEBRUARY,  Month.parse("feb"));
-        assertEquals(MARCH,  Month.parse("mar"));
-        assertEquals(APRIL,  Month.parse("apr"));
-        assertEquals(MAY,  Month.parse("may"));
-        assertEquals(JUNE,  Month.parse("jun"));
-        assertEquals(JULY,  Month.parse("jul"));
-        assertEquals(AUGUST,  Month.parse("aug"));
-        assertEquals(SEPTEMBER,  Month.parse("sep"));
-        assertEquals(OCTOBER,  Month.parse("oct"));
-        assertEquals(NOVEMBER,  Month.parse("nov"));
-        assertEquals(DECEMBER,  Month.parse("dec"));
-        assertEquals(JANUARY,  Month.parse("JAN"));
-        assertEquals(FEBRUARY,  Month.parse("FEB"));
-        assertEquals(MARCH,  Month.parse("MAR"));
-        assertEquals(APRIL, Month.parse("APR"));
-        assertEquals(MAY, Month.parse("MAY"));
-        assertEquals(JUNE, Month.parse("JUN"));
-        assertEquals(JULY, Month.parse("JUL"));
-        assertEquals(AUGUST, Month.parse("AUG"));
-        assertEquals(SEPTEMBER, Month.parse("SEP"));
-        assertEquals(OCTOBER, Month.parse("OCT"));
-        assertEquals(NOVEMBER, Month.parse("NOV"));
-        assertEquals(DECEMBER, Month.parse("DEC"));
-        assertEquals(JANUARY, Month.parse("january"));
-        assertEquals(FEBRUARY, Month.parse("february"));
-        assertEquals(MARCH, Month.parse("march"));
-        assertEquals(APRIL, Month.parse("april"));
-        assertEquals(MAY, Month.parse("may"));
-        assertEquals(JUNE, Month.parse("june"));
-        assertEquals(JULY, Month.parse("july"));
-        assertEquals(AUGUST, Month.parse("august"));
-        assertEquals(SEPTEMBER, Month.parse("september"));
-        assertEquals(OCTOBER, Month.parse("october"));
-        assertEquals(NOVEMBER, Month.parse("november"));
-        assertEquals(DECEMBER, Month.parse("december"));
-        assertEquals(JANUARY, Month.parse("JANUARY"));
-        assertEquals(FEBRUARY, Month.parse("FEBRUARY"));
-        assertEquals(MARCH, Month.parse("MAR"));
-        assertEquals(APRIL, Month.parse("APRIL"));
-        assertEquals(MAY, Month.parse("MAY"));
-        assertEquals(JUNE, Month.parse("JUNE"));
-        assertEquals(JULY, Month.parse("JULY"));
-        assertEquals(AUGUST, Month.parse("AUGUST"));
-        assertEquals(SEPTEMBER, Month.parse("SEPTEMBER"));
-        assertEquals(OCTOBER, Month.parse("OCTOBER"));
-        assertEquals(NOVEMBER, Month.parse("NOVEMBER"));
-        assertEquals(DECEMBER, Month.parse("DECEMBER"));
-    }
-
-    @Test
-    public void testIsValidWeekInMonthCode() throws Exception {
-        for (int w = 0; w <= 4; w++) {
-            assertTrue(isValidWeekInMonthCode(w));
-        }
-        assertFalse(isValidWeekInMonthCode(5));
     }
 
     @Test
@@ -299,6 +155,15 @@ public class AdditionalSerialDateTest {
         assertEquals(d(28, FEBRUARY, 1905), addYears(1, d(29, FEBRUARY, 1904)));
         assertEquals(d(28, FEBRUARY, 1905), addYears(1, d(28, FEBRUARY, 1904)));
         assertEquals(d(28, FEBRUARY, 1904), addYears(1, d(28, FEBRUARY, 1903)));
+    }
+
+
+    @Test
+    public void testIsValidWeekInMonthCode() throws Exception {
+        for (int w = 0; w <= 4; w++) {
+            Assert.assertTrue(DayDate.isValidWeekInMonthCode(w));
+        }
+        Assert.assertFalse(DayDate.isValidWeekInMonthCode(5));
     }
 
     @Test
@@ -458,8 +323,6 @@ public class AdditionalSerialDateTest {
         assertEquals(d(1, JANUARY, 2006),
                 createInstance(new GregorianCalendar(2006, 0, 1).getTime()));
     }
-
-
 }
 
 

@@ -1,5 +1,6 @@
 package org.jfree.date;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -281,4 +282,6 @@ public class DayDateTest {
         assertEquals(Month.JULY, d4.getMonth());
         assertEquals(2004, d4.getYYYY());
     }
+
+
 }
