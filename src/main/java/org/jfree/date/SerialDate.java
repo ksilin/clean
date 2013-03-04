@@ -749,13 +749,20 @@ public abstract class SerialDate implements Comparable,
     public static String weekInMonthToString(final int count) {
 
         switch (count) {
-            case SerialDate.FIRST_WEEK_IN_MONTH : return "First";
-            case SerialDate.SECOND_WEEK_IN_MONTH : return "Second";
-            case SerialDate.THIRD_WEEK_IN_MONTH : return "Third";
-            case SerialDate.FOURTH_WEEK_IN_MONTH : return "Fourth";
-            case SerialDate.LAST_WEEK_IN_MONTH : return "Last";
-            default :
-                return "SerialDate.weekInMonthToString(): invalid code.";
+            case SerialDate.FIRST_WEEK_IN_MONTH:
+                return "First";
+            case SerialDate.SECOND_WEEK_IN_MONTH:
+                return "Second";
+            case SerialDate.THIRD_WEEK_IN_MONTH:
+                return "Third";
+            case SerialDate.FOURTH_WEEK_IN_MONTH:
+                return "Fourth";
+            case SerialDate.LAST_WEEK_IN_MONTH:
+                return "Last";
+            default:
+                throw new IllegalArgumentException(
+                        "Invalid week in month code."
+                );
         }
 
     }
@@ -772,10 +779,16 @@ public abstract class SerialDate implements Comparable,
     public static String relativeToString(final int relative) {
 
         switch (relative) {
-            case SerialDate.PRECEDING : return "Preceding";
-            case SerialDate.NEAREST : return "Nearest";
-            case SerialDate.FOLLOWING : return "Following";
-            default : return "ERROR : Relative To String";
+            case SerialDate.PRECEDING:
+                return "Preceding";
+            case SerialDate.NEAREST:
+                return "Nearest";
+            case SerialDate.FOLLOWING:
+                return "Following";
+            default:
+                throw new IllegalArgumentException(
+                        "Invalid week in month code."
+                );
         }
 
     }
