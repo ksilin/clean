@@ -102,13 +102,6 @@ public class DayDateTest {
         assertEquals(19, mondayNearest.getDayOfMonth());
     }
 
-    @Test
-    public void testMonthCodeToQuarter(){
-
-        assertEquals(1, DayDate.monthCodeToQuarter(Month.JANUARY));
-        assertEquals(4, DayDate.monthCodeToQuarter(Month.DECEMBER));
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void testMonthCodeToQuarterShouldThrowOn0(){
 

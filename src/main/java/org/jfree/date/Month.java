@@ -36,6 +36,10 @@ public enum Month {
         return index;
     }
 
+    public int quarter() {
+        return 1 + (index - 1) / 3;
+    }
+
     public static Month parse(String s) {
         s = s.trim();
         for (Month m : Month.values())
