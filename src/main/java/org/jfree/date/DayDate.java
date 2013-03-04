@@ -208,34 +208,6 @@ public abstract class DayDate implements Comparable,
     }
 
     /**
-     * Returns an array of month names.
-     *
-     * @return an array of month names.
-     */
-    public static String[] getMonths() {
-
-        return getMonths(false);
-
-    }
-
-    /**
-     * Returns an array of month names.
-     *
-     * @param shortened a flag indicating that shortened month names should
-     *                  be returned.
-     * @return an array of month names.
-     */
-    public static String[] getMonths(final boolean shortened) {
-
-        if (shortened) {
-            return DATE_FORMAT_SYMBOLS.getShortMonths();
-        } else {
-            return DATE_FORMAT_SYMBOLS.getMonths();
-        }
-
-    }
-
-    /**
      * Returns the quarter for the specified month.
      *
      * @param month the month code (1-12).
@@ -264,50 +236,6 @@ public abstract class DayDate implements Comparable,
                 throw new IllegalArgumentException(
                         "DayDate.monthCodeToQuarter: invalid month code.");
         }
-
-    }
-
-    /**
-     * Converts a string to a month code.
-     * <p/>
-     * This method will return one of the constants JANUARY, FEBRUARY, ...,
-     * DECEMBER that corresponds to the string.  If the string is not
-     * recognised, this method returns -1.
-     *
-     * @param s the string to parse.
-     * @return <code>-1</code> if the string is not parseable, the month of the
-     *         year otherwise.
-     */
-    public static int stringToMonthCode(String s) {
-
-        final String[] shortMonthNames = DATE_FORMAT_SYMBOLS.getShortMonths();
-        final String[] monthNames = DATE_FORMAT_SYMBOLS.getMonths();
-
-        int result = -1;
-        s = s.trim();
-
-        // first try parsing the string as an integer (1-12)...
-        try {
-            result = Integer.parseInt(s);
-        } catch (NumberFormatException e) {
-            // suppress
-        }
-
-        // now search through the month names...
-        if ((result < 1) || (result > 12)) {
-            for (int i = 0; i < monthNames.length; i++) {
-                if (s.equals(shortMonthNames[i])) {
-                    result = i + 1;
-                    break;
-                }
-                if (s.equals(monthNames[i])) {
-                    result = i + 1;
-                    break;
-                }
-            }
-        }
-
-        return result;
 
     }
 
@@ -427,9 +355,9 @@ public abstract class DayDate implements Comparable,
         final int mm = (12 * base.getYYYY() + base.getMonth().getIndex() + months - 1)
                 % 12 + 1;
         final int dd = Math.min(
-                base.getDayOfMonth(), DayDate.lastDayOfMonth(Month.make(mm), yy)
+                base.getDayOfMonth(), DayDate.lastDayOfMonth(Month.fromInt(mm), yy)
         );
-        return DayDate.createInstance(dd, Month.make(mm), yy);
+        return DayDate.createInstance(dd, Month.fromInt(mm), yy);
 
     }
 
@@ -652,7 +580,7 @@ public abstract class DayDate implements Comparable,
         final GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         return new SpreadsheetDate(calendar.get(Calendar.DATE),
-                Month.make(calendar.get(Calendar.MONTH) + 1),
+                Month.fromInt(calendar.get(Calendar.MONTH) + 1),
                 calendar.get(Calendar.YEAR));
 
     }

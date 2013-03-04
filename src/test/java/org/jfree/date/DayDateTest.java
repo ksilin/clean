@@ -111,14 +111,14 @@ public class DayDateTest {
     @Test(expected = IllegalArgumentException.class)
     public void testMonthCodeToQuarterShouldThrowOn0(){
 
-        Month.make(0);
+        Month.fromInt(0);
     }
 
 
     @Test(expected = IllegalArgumentException.class)
     public void testMonthCodeToQuarterShouldThrowOn13(){
 
-        Month.make(13);
+        Month.fromInt(13);
     }
 
     /**

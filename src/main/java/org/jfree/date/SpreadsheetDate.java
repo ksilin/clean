@@ -466,7 +466,7 @@ public class SpreadsheetDate extends DayDate {
             mm = mm + 1;
             sss = ss2 + daysToEndOfPrecedingMonth[mm] - 1;
         }
-        this.month = Month.make(mm - 1);
+        this.month = Month.fromInt(mm - 1);
 
         // what's left is d(+1);
         this.day = this.serial - ss2
