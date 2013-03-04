@@ -425,8 +425,8 @@ public class AdditionalSerialDateTest {
         assertEquals("Fourth", weekInMonthToString(FOURTH_WEEK_IN_MONTH));
         assertEquals("Last", weekInMonthToString(LAST_WEEK_IN_MONTH));
         try {
-//            weekInMonthToString(-1);
-//            fail("Invalid week code should throw exception");
+            weekInMonthToString(-1);
+            fail("Invalid week code should throw exception");
         } catch (IllegalArgumentException e) {
         }
     }
@@ -438,7 +438,7 @@ public class AdditionalSerialDateTest {
         assertEquals("Following", relativeToString(FOLLOWING));
         try {
             relativeToString(-1000);
-//            fail("Invalid relative code should throw exception");
+            fail("Invalid relative code should throw exception");
         } catch (IllegalArgumentException e) {
         }
     }
