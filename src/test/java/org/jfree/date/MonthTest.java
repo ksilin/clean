@@ -28,7 +28,6 @@ public class MonthTest {
         Month.fromInt(13);
     }
 
-
     @Test
     public void testQuarter() throws Exception {
         Assert.assertEquals(1, Month.JANUARY.quarter());

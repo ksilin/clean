@@ -6,69 +6,11 @@ import org.junit.Test;
 import java.util.GregorianCalendar;
 
 import static junit.framework.Assert.*;
+import static org.jfree.date.Day.*;
 import static org.jfree.date.DayDate.*;
 import static org.jfree.date.Month.*;
 
 public class AdditionalSerialDateTest {
-
-    @Test
-    public void testIsValidWeekdayCode() throws Exception {
-        for (int day = 1; day <= 7; day++)
-            assertTrue(isValidWeekdayCode(day));
-        assertFalse(isValidWeekdayCode(0));
-        assertFalse(isValidWeekdayCode(8));
-    }
-
-    @Test
-    public void testStringToWeekdayCode() throws Exception {
-        assertEquals(-1, stringToWeekdayCode("Hello"));
-        assertEquals(MONDAY, stringToWeekdayCode("Monday"));
-        assertEquals(MONDAY, stringToWeekdayCode("Mon"));
-        assertEquals(MONDAY, stringToWeekdayCode("monday"));
-        assertEquals(MONDAY, stringToWeekdayCode("MONDAY"));
-        assertEquals(MONDAY, stringToWeekdayCode("mon"));
-        assertEquals(TUESDAY, stringToWeekdayCode("Tuesday"));
-        assertEquals(TUESDAY, stringToWeekdayCode("Tue"));
-        assertEquals(TUESDAY, stringToWeekdayCode("tuesday"));
-        assertEquals(TUESDAY, stringToWeekdayCode("TUESDAY"));
-        assertEquals(TUESDAY, stringToWeekdayCode("tue"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("Wednesday"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("Wed"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("wednesday"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("WEDNESDAY"));
-        assertEquals(WEDNESDAY, stringToWeekdayCode("wed"));
-        assertEquals(THURSDAY, stringToWeekdayCode("Thursday"));
-        assertEquals(THURSDAY, stringToWeekdayCode("Thu"));
-        assertEquals(THURSDAY, stringToWeekdayCode("thursday"));
-        assertEquals(THURSDAY, stringToWeekdayCode("THURSDAY"));
-        assertEquals(THURSDAY, stringToWeekdayCode("thu"));
-        assertEquals(FRIDAY, stringToWeekdayCode("Friday"));
-        assertEquals(FRIDAY, stringToWeekdayCode("Fri"));
-        assertEquals(FRIDAY, stringToWeekdayCode("friday"));
-        assertEquals(FRIDAY, stringToWeekdayCode("FRIDAY"));
-        assertEquals(FRIDAY, stringToWeekdayCode("fri"));
-        assertEquals(SATURDAY, stringToWeekdayCode("Saturday"));
-        assertEquals(SATURDAY, stringToWeekdayCode("Sat"));
-        assertEquals(SATURDAY, stringToWeekdayCode("saturday"));
-        assertEquals(SATURDAY, stringToWeekdayCode("SATURDAY"));
-        assertEquals(SATURDAY, stringToWeekdayCode("sat"));
-        assertEquals(SUNDAY, stringToWeekdayCode("Sunday"));
-        assertEquals(SUNDAY, stringToWeekdayCode("Sun"));
-        assertEquals(SUNDAY, stringToWeekdayCode("sunday"));
-        assertEquals(SUNDAY, stringToWeekdayCode("SUNDAY"));
-        assertEquals(SUNDAY, stringToWeekdayCode("sun"));
-    }
-
-    @Test
-    public void testWeekdayCodeToString() throws Exception {
-        assertEquals("Sunday", weekdayCodeToString(SUNDAY));
-        assertEquals("Monday", weekdayCodeToString(MONDAY));
-        assertEquals("Tuesday", weekdayCodeToString(TUESDAY));
-        assertEquals("Wednesday", weekdayCodeToString(WEDNESDAY));
-        assertEquals("Thursday", weekdayCodeToString(THURSDAY));
-        assertEquals("Friday", weekdayCodeToString(FRIDAY));
-        assertEquals("Saturday", weekdayCodeToString(SATURDAY));
-    }
 
     @Test
     public void testIsLeapYear() throws Exception {
@@ -172,11 +114,6 @@ public class AdditionalSerialDateTest {
         assertEquals(d(22, FEBRUARY, 2006), getPreviousDayOfWeek(WEDNESDAY, d(1, MARCH, 2006)));
         assertEquals(d(29, FEBRUARY, 2004), getPreviousDayOfWeek(SUNDAY, d(3, MARCH, 2004)));
         assertEquals(d(29, DECEMBER, 2004), getPreviousDayOfWeek(WEDNESDAY, d(5, JANUARY, 2005)));
-        try {
-            getPreviousDayOfWeek(-1, d(1, JANUARY, 2006));
-            fail("Invalid day of week code should throw exception");
-        } catch (IllegalArgumentException e) {
-        }
     }
 
     @Test
@@ -184,11 +121,6 @@ public class AdditionalSerialDateTest {
         assertEquals(d(1, JANUARY, 2005), getFollowingDayOfWeek(SATURDAY, d(25, DECEMBER, 2004)));
         assertEquals(d(1, JANUARY, 2005), getFollowingDayOfWeek(SATURDAY, d(26, DECEMBER, 2004)));
         assertEquals(d(3, MARCH, 2004), getFollowingDayOfWeek(WEDNESDAY, d(28, FEBRUARY, 2004)));
-        try {
-            getFollowingDayOfWeek(-1, d(1, JANUARY, 2006));
-            fail("Invalid day of week code should throw exception");
-        } catch (IllegalArgumentException e) {
-        }
     }
 
     @Test
@@ -250,11 +182,6 @@ public class AdditionalSerialDateTest {
         assertEquals(d(22, APRIL, 2006), getNearestDayOfWeek(SATURDAY, d(21, APRIL, 2006)));
         assertEquals(d(22, APRIL, 2006), getNearestDayOfWeek(SATURDAY, d(22, APRIL, 2006)));
 
-        try {
-            getNearestDayOfWeek(-1, d(1, JANUARY, 2006));
-            fail("Invalid day of week code should throw exception");
-        } catch (IllegalArgumentException e) {
-        }
     }
 
     @Test

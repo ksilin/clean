@@ -38,8 +38,8 @@ public class SpreadsheetDateTest {
      */
     @Test
     public void test1Jan1900GetDayOfWeek() {
-        final int dayOfWeek = this.jan1Y1900.getDayOfWeek();
-        assertEquals(Calendar.MONDAY, dayOfWeek);
+        final Day dayOfWeek = this.jan1Y1900.getDayOfWeek();
+        assertEquals(Day.MONDAY, dayOfWeek);
     }
 
     /**
@@ -48,8 +48,8 @@ public class SpreadsheetDateTest {
     @Test
     public void test12Nov2001GetDayOfWeek() {
         final DayDate nov12Y2001 = new SpreadsheetDate(12, Month.NOVEMBER, 2001);
-        final int dayOfWeek = nov12Y2001.getDayOfWeek();
-        assertEquals(Calendar.MONDAY, dayOfWeek);
+        final Day dayOfWeek = nov12Y2001.getDayOfWeek();
+        assertEquals(Day.MONDAY, dayOfWeek);
     }
 
     /**
