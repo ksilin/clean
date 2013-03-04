@@ -6,7 +6,8 @@ import org.junit.Test;
 import java.io.*;
 import java.util.Calendar;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 
 /**
@@ -100,19 +101,6 @@ public class DayDateTest {
         assertEquals(19, mondayNearest.getDayOfMonth());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testMonthCodeToQuarterShouldThrowOn0() {
-
-        Month.fromInt(0);
-    }
-
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testMonthCodeToQuarterShouldThrowOn13() {
-
-        Month.fromInt(13);
-    }
-
     /**
      * Problem that the conversion of days to strings returns the right result.  Actually, this
      * result depends on the Locale so this test needs to be modified.
@@ -122,39 +110,6 @@ public class DayDateTest {
 
         final String test = Day.fromInt(Calendar.SATURDAY).toString();
         assertEquals("Saturday", test);
-    }
-
-
-    /**
-     * Test the conversion of a string to a weekday.  Note that this test will fail if the
-     * default locale doesn't use English weekday names...devise a better test!
-     */
-    @Test
-    public void testStringToWeekday() {
-
-        assertEquals(Day.WEDNESDAY, Day.parse("Wednesday"));
-        assertEquals(Day.WEDNESDAY, Day.parse("Wed"));
-    }
-
-    @Test
-    public void stringToWeekdayShouldIgnoreWhitespace() {
-
-        assertEquals(Day.WEDNESDAY, Day.parse(" Wednesday "));
-        assertEquals(Day.WEDNESDAY, Day.parse(" Wed "));
-    }
-
-    @Test
-    public void stringToWeekdayShouldReturnNegativeOneForUnparseableStrings() {
-        try {
-            Day.parse("Wad");
-            fail("Invalid weekday code should throw exception");
-        } catch (IllegalArgumentException e) {
-        }
-        try {
-            Day.parse("Wadnesday");
-            fail("Invalid weekday code should throw exception");
-        } catch (IllegalArgumentException e) {
-        }
     }
 
     /**
