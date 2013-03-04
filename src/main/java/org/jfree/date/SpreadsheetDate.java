@@ -80,6 +80,17 @@ import java.util.Date;
 public class SpreadsheetDate extends DayDate {
 
     /**
+     * The serial number for 1 January 1900.
+     */
+    public static final int EARLIEST_DATE_ORDINAL = 2;
+    /**
+     * The serial number for 31 December 9999.
+     */
+    public static final int LATEST_DATE_ORDINAL = 2958465;
+
+    public static final int MINIMUM_YEAR_SUPPORTED = 1900;
+    public static final int MAXIMUM_YEAR_SUPPORTED = 9999;
+    /**
      * For serialization.
      */
     private static final long serialVersionUID = -2039586705374454461L;
@@ -149,7 +160,7 @@ public class SpreadsheetDate extends DayDate {
      */
     public SpreadsheetDate(final int serial) {
 
-        if ((serial >= SERIAL_LOWER_BOUND) && (serial <= SERIAL_UPPER_BOUND)) {
+        if ((serial >= EARLIEST_DATE_ORDINAL) && (serial <= LATEST_DATE_ORDINAL)) {
             this.serial = serial;
         } else {
             throw new IllegalArgumentException(
@@ -430,7 +441,7 @@ public class SpreadsheetDate extends DayDate {
     private void calcDayMonthYear() {
 
         // get the year from the serial date
-        final int days = this.serial - SERIAL_LOWER_BOUND;
+        final int days = this.serial - EARLIEST_DATE_ORDINAL;
         // overestimated because we ignored leap days
         final int overestimatedYYYY = 1900 + (days / 365);
         final int leaps = DayDate.leapYearCount(overestimatedYYYY);

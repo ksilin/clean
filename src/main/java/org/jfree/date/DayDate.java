@@ -51,20 +51,6 @@ public abstract class DayDate implements Comparable,
     public static final DateFormatSymbols
             DATE_FORMAT_SYMBOLS = new SimpleDateFormat().getDateFormatSymbols();
 
-    /**
-     * The serial number for 1 January 1900.
-     */
-    public static final int SERIAL_LOWER_BOUND = 2;
-
-    /**
-     * The serial number for 31 December 9999.
-     */
-    public static final int SERIAL_UPPER_BOUND = 2958465;
-
-    public static final int MINIMUM_YEAR_SUPPORTED = 1900;
-
-    public static final int MAXIMUM_YEAR_SUPPORTED = 9999;
-
     public static final int MONDAY = Calendar.MONDAY;
 
     public static final int TUESDAY = Calendar.TUESDAY;
