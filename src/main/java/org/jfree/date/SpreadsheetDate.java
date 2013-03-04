@@ -90,6 +90,11 @@ public class SpreadsheetDate extends DayDate {
 
     public static final int MINIMUM_YEAR_SUPPORTED = 1900;
     public static final int MAXIMUM_YEAR_SUPPORTED = 9999;
+    static final int[] AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH =
+            {0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
+    static final int[]
+            LEAP_YEAR_AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH =
+            {0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366};
     /**
      * For serialization.
      */
@@ -425,7 +430,7 @@ public class SpreadsheetDate extends DayDate {
      */
     private int calcSerial(final int day, final Month month, final int year) {
         final int yy = ((year - 1900) * 365) + DayDate.leapYearCount(year - 1);
-        int mm = DayDate.AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH[month.getIndex()];
+        int mm = SpreadsheetDate.AGGREGATE_DAYS_TO_END_OF_PRECEDING_MONTH[month.getIndex()];
         if (month.getIndex() > Month.FEBRUARY.getIndex()) {
             if (DayDate.isLeapYear(year)) {
                 mm = mm + 1;
