@@ -1,5 +1,6 @@
 package org.jfree.date;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ public class DayDateTest {
      */
     @Before
     public void setUp() {
-        this.nov9Y2001 = DayDate.createInstance(9, MonthConstants.NOVEMBER, 2001);
+        this.nov9Y2001 = DayDate.createInstance(9, Month.NOVEMBER, 2001);
     }
 
     /**
@@ -34,7 +35,7 @@ public class DayDateTest {
     @Test
     public void testAddMonthsTo9Nov2001() {
         final DayDate jan9Y2002 = DayDate.addMonths(2, this.nov9Y2001);
-        final DayDate answer = DayDate.createInstance(9, 1, 2002);
+        final DayDate answer = DayDate.createInstance(9, Month.JANUARY, 2002);
         assertEquals(answer, jan9Y2002);
     }
 
@@ -43,9 +44,9 @@ public class DayDateTest {
      */
     @Test
     public void testAddMonthsTo5Oct2003() {
-        final DayDate d1 = DayDate.createInstance(5, MonthConstants.OCTOBER, 2003);
+        final DayDate d1 = DayDate.createInstance(5, Month.OCTOBER, 2003);
         final DayDate d2 = DayDate.addMonths(2, d1);
-        assertEquals(d2, DayDate.createInstance(5, MonthConstants.DECEMBER, 2003));
+        assertEquals(d2, DayDate.createInstance(5, Month.DECEMBER, 2003));
     }
 
     /**
@@ -53,7 +54,7 @@ public class DayDateTest {
      */
     @Test
     public void testAddMonthsTo1Jan2003() {
-        final DayDate d1 = DayDate.createInstance(1, MonthConstants.JANUARY, 2003);
+        final DayDate d1 = DayDate.createInstance(1, Month.JANUARY, 2003);
         final DayDate d2 = DayDate.addMonths(0, d1);
         assertEquals(d2, d1);
     }
@@ -96,7 +97,7 @@ public class DayDateTest {
      */
     @Test
     public void testMondayNearest22Jan1970() {
-        DayDate jan22Y1970 = DayDate.createInstance(22, MonthConstants.JANUARY, 1970);
+        DayDate jan22Y1970 = DayDate.createInstance(22, Month.JANUARY, 1970);
         DayDate mondayNearest = DayDate.getNearestDayOfWeek(Calendar.MONDAY, jan22Y1970);
         assertEquals(19, mondayNearest.getDayOfMonth());
     }
@@ -104,21 +105,21 @@ public class DayDateTest {
     @Test
     public void testMonthCodeToQuarter(){
 
-        assertEquals(1, DayDate.monthCodeToQuarter(DayDate.JANUARY));
-        assertEquals(4, DayDate.monthCodeToQuarter(DayDate.DECEMBER));
+        assertEquals(1, DayDate.monthCodeToQuarter(Month.JANUARY));
+        assertEquals(4, DayDate.monthCodeToQuarter(Month.DECEMBER));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testMonthCodeToQuarterShouldThrowOn0(){
 
-        assertEquals(1, DayDate.monthCodeToQuarter(0));
+        Month.fromInt(0);
     }
 
 
     @Test(expected = IllegalArgumentException.class)
     public void testMonthCodeToQuarterShouldThrowOn13(){
 
-        assertEquals(1, DayDate.monthCodeToQuarter(13));
+        Month.fromInt(13);
     }
 
     /**
@@ -165,35 +166,6 @@ public class DayDateTest {
 
         weekday = DayDate.stringToWeekdayCode("Wadnesday");
         assertEquals(-1, weekday);
-    }
-
-    /**
-     * Test the conversion of a string to a month.  Note that this test will fail if the default
-     * locale doesn't use English month names...devise a better test!
-     */
-    @Test
-    public void testStringToMonthCode() {
-
-        int m = DayDate.stringToMonthCode("January");
-        assertEquals(MonthConstants.JANUARY, m);
-
-        m = DayDate.stringToMonthCode(" January ");
-        assertEquals(MonthConstants.JANUARY, m);
-
-        m = DayDate.stringToMonthCode("Jan");
-        assertEquals(MonthConstants.JANUARY, m);
-
-    }
-
-    /**
-     * Tests the conversion of a month code to a string.
-     */
-    @Test
-    public void testMonthCodeToStringCode() {
-
-        final String test = DayDate.monthCodeToString(MonthConstants.DECEMBER);
-        assertEquals("December", test);
-
     }
 
     /**
@@ -258,7 +230,7 @@ public class DayDateTest {
     @Test
     public void testSerialization() {
 
-        DayDate d1 = DayDate.createInstance(15, 4, 2000);
+        DayDate d1 = DayDate.createInstance(15,Month.APRIL, 2000);
         DayDate d2 = null;
 
         try {
@@ -282,9 +254,9 @@ public class DayDateTest {
      */
     @Test
     public void test1096282() {
-        DayDate d = DayDate.createInstance(29, 2, 2004);
+        DayDate d = DayDate.createInstance(29, Month.FEBRUARY, 2004);
         d = DayDate.addYears(1, d);
-        DayDate expected = DayDate.createInstance(28, 2, 2005);
+        DayDate expected = DayDate.createInstance(28, Month.FEBRUARY, 2005);
         assertTrue(d.isOn(expected));
     }
 
@@ -293,21 +265,23 @@ public class DayDateTest {
      */
     @Test
     public void testAddMonths() {
-        DayDate d1 = DayDate.createInstance(31, 5, 2004);
+        DayDate d1 = DayDate.createInstance(31, Month.MAY, 2004);
 
         DayDate d2 = DayDate.addMonths(1, d1);
         assertEquals(30, d2.getDayOfMonth());
-        assertEquals(6, d2.getMonth());
+        assertEquals(Month.JUNE, d2.getMonth());
         assertEquals(2004, d2.getYYYY());
 
         DayDate d3 = DayDate.addMonths(2, d1);
         assertEquals(31, d3.getDayOfMonth());
-        assertEquals(7, d3.getMonth());
+        assertEquals(Month.JULY, d3.getMonth());
         assertEquals(2004, d3.getYYYY());
 
         DayDate d4 = DayDate.addMonths(1, DayDate.addMonths(1, d1));
         assertEquals(30, d4.getDayOfMonth());
-        assertEquals(7, d4.getMonth());
+        assertEquals(Month.JULY, d4.getMonth());
         assertEquals(2004, d4.getYYYY());
     }
+
+
 }
