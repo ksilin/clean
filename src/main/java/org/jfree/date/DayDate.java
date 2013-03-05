@@ -86,8 +86,6 @@ public abstract class DayDate implements Comparable,
      */
     public static final int FOLLOWING = 1;
 
-    private String description;
-
     private static final long serialVersionUID = -293716040467423637L;
 
     protected DayDate() {
@@ -394,24 +392,6 @@ public abstract class DayDate implements Comparable,
      * @return this as <code>java.util.Date</code>.
      */
     public abstract java.util.Date toDate();
-
-    /**
-     * Returns a description of the date.
-     *
-     * @return a description of the date.
-     */
-    public String getDescription() {
-        return this.description;
-    }
-
-    /**
-     * Sets the description for the date.
-     *
-     * @param description the new description for the date.
-     */
-    public void setDescription(final String description) {
-        this.description = description;
-    }
 
     /**
      * Converts the date to a string.
