@@ -1,6 +1,5 @@
 package org.jfree.date;
 
-import junit.framework.Assert;
 import org.junit.Test;
 
 import java.util.GregorianCalendar;
@@ -101,14 +100,6 @@ public class AdditionalSerialDateTest {
 
 
     @Test
-    public void testIsValidWeekInMonthCode() throws Exception {
-        for (int w = 0; w <= 4; w++) {
-            Assert.assertTrue(DayDate.isValidWeekInMonthCode(w));
-        }
-        Assert.assertFalse(DayDate.isValidWeekInMonthCode(5));
-    }
-
-    @Test
     public void testGetPreviousDayOfWeek() throws Exception {
         assertEquals(d(24, FEBRUARY, 2006), getPreviousDayOfWeek(FRIDAY, d(1, MARCH, 2006)));
         assertEquals(d(22, FEBRUARY, 2006), getPreviousDayOfWeek(WEDNESDAY, d(1, MARCH, 2006)));
@@ -200,20 +191,6 @@ public class AdditionalSerialDateTest {
         assertEquals(d(30, NOVEMBER, 2006), d.getEndOfCurrentMonth(d(1, NOVEMBER, 2006)));
         assertEquals(d(31, DECEMBER, 2006), d.getEndOfCurrentMonth(d(1, DECEMBER, 2006)));
         assertEquals(d(29, FEBRUARY, 2008), d.getEndOfCurrentMonth(d(1, FEBRUARY, 2008)));
-    }
-
-    @Test
-    public void testWeekInMonthToString() throws Exception {
-        assertEquals("First", weekInMonthToString(FIRST_WEEK_IN_MONTH));
-        assertEquals("Second", weekInMonthToString(SECOND_WEEK_IN_MONTH));
-        assertEquals("Third", weekInMonthToString(THIRD_WEEK_IN_MONTH));
-        assertEquals("Fourth", weekInMonthToString(FOURTH_WEEK_IN_MONTH));
-        assertEquals("Last", weekInMonthToString(LAST_WEEK_IN_MONTH));
-        try {
-            weekInMonthToString(-1);
-            fail("Invalid week code should throw exception");
-        } catch (IllegalArgumentException e) {
-        }
     }
 
     @Test
