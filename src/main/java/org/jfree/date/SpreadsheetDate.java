@@ -80,11 +80,11 @@ import java.util.Date;
 public class SpreadsheetDate extends DayDate {
 
     /**
-     * The serial number for 1 January 1900.
+     * The ordinal number for 1 January 1900.
      */
     public static final int EARLIEST_DATE_ORDINAL = 2;
     /**
-     * The serial number for 31 December 9999.
+     * The ordinal number for 31 December 9999.
      */
     public static final int LATEST_DATE_ORDINAL = 2958465;
 
@@ -383,9 +383,9 @@ public class SpreadsheetDate extends DayDate {
      * @param d2 the other boundary date for the range.
      * @return A boolean.
      */
-    public boolean isInRange(final DayDate d1, final DayDate d2) {
-        return isInRange(d1, d2, DayDate.INCLUDE_BOTH);
-    }
+//    public boolean isInRange(final DayDate d1, final DayDate d2) {
+//        return isInRange(d1, d2, DayDate.INCLUDE_BOTH);
+//    }
 
     /**
      * Returns true if this DayDate is within the specified range (caller
@@ -399,24 +399,24 @@ public class SpreadsheetDate extends DayDate {
      * @return <code>true</code> if this DayDate is within the specified
      *         range.
      */
-    public boolean isInRange(final DayDate d1, final DayDate d2,
-                             final int include) {
-        final int s1 = d1.toSerial();
-        final int s2 = d2.toSerial();
-        final int start = Math.min(s1, s2);
-        final int end = Math.max(s1, s2);
-
-        final int s = toSerial();
-        if (include == DayDate.INCLUDE_BOTH) {
-            return (s >= start && s <= end);
-        } else if (include == DayDate.INCLUDE_FIRST) {
-            return (s >= start && s < end);
-        } else if (include == DayDate.INCLUDE_SECOND) {
-            return (s > start && s <= end);
-        } else {
-            return (s > start && s < end);
-        }
-    }
+//    public boolean isInRange(final DayDate d1, final DayDate d2,
+//                             final int include) {
+//        final int s1 = d1.toSerial();
+//        final int s2 = d2.toSerial();
+//        final int start = Math.min(s1, s2);
+//        final int end = Math.max(s1, s2);
+//
+//        final int s = toSerial();
+//        if (include == DayDate.INCLUDE_BOTH) {
+//            return (s >= start && s <= end);
+//        } else if (include == DayDate.INCLUDE_FIRST) {
+//            return (s >= start && s < end);
+//        } else if (include == DayDate.INCLUDE_SECOND) {
+//            return (s > start && s <= end);
+//        } else {
+//            return (s > start && s < end);
+//        }
+//    }
 
     /**
      * Calculate the serial number from the day, month and year.

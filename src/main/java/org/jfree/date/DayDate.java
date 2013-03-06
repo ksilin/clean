@@ -60,14 +60,6 @@ public abstract class DayDate implements Comparable,
 
     public static final int LAST_WEEK_IN_MONTH = 0;
 
-    public static final int INCLUDE_NONE = 0;
-
-    public static final int INCLUDE_FIRST = 1;
-
-    public static final int INCLUDE_SECOND = 2;
-
-    public static final int INCLUDE_BOTH = 3;
-
     /**
      * Useful constant for specifying a day of the week relative to a fixed
      * date.
@@ -513,30 +505,6 @@ public abstract class DayDate implements Comparable,
      */
     public abstract boolean isOnOrAfter(DayDate other);
 
-    /**
-     * Returns <code>true</code> if this {@link DayDate} is within the
-     * specified range (INCLUSIVE).  The date order of d1 and d2 is not
-     * important.
-     *
-     * @param d1 a boundary date for the range.
-     * @param d2 the other boundary date for the range.
-     * @return A boolean.
-     */
-    public abstract boolean isInRange(DayDate d1, DayDate d2);
-
-    /**
-     * Returns <code>true</code> if this {@link DayDate} is within the
-     * specified range (caller specifies whether or not the end-points are
-     * included).  The date order of d1 and d2 is not important.
-     *
-     * @param d1      a boundary date for the range.
-     * @param d2      the other boundary date for the range.
-     * @param include a code that controls whether or not the start and end
-     *                dates are included in the range.
-     * @return A boolean.
-     */
-    public abstract boolean isInRange(DayDate d1, DayDate d2,
-                                      int include);
 
     /**
      * Returns the latest date that falls on the specified day-of-the-week and
