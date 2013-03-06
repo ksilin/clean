@@ -124,16 +124,11 @@ public abstract class DayDate implements Comparable,
      */
     public static boolean isLeapYear(final int yyyy) {
 
-        if ((yyyy % 4) != 0) {
-            return false;
-        } else if ((yyyy % 400) == 0) {
-            return true;
-        } else if ((yyyy % 100) == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        boolean fourth = yyyy % 4 == 0;
+        boolean hundredth = yyyy % 100 == 0;
+        boolean fourHundredth = yyyy % 400 == 0;
 
+        return fourth && (!hundredth || fourHundredth);
     }
 
     /**
