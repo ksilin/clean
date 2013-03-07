@@ -23,9 +23,6 @@
 package org.jfree.date;
 
 import java.io.Serializable;
-import java.text.DateFormatSymbols;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 /**
  * An abstract class that defines our requirements for manipulating dates.
@@ -67,6 +64,8 @@ public abstract class DayDate implements Comparable,
     public static final int INCLUDE_SECOND = 2;
 
     public static final int INCLUDE_BOTH = 3;
+
+
 
     /**
      * Useful constant for specifying a day of the week relative to a fixed
@@ -180,13 +179,11 @@ public abstract class DayDate implements Comparable,
      * date.
      *
      * @param days the number of days to add (can be negative).
-     * @param base the base date.
      * @return a new date.
      */
-    public static DayDate addDays(final int days, final DayDate base) {
+    public DayDate addDays(final int days) {
 
-        final int serialDayNumber = base.toSerial() + days;
-        return DayDateFactory.makeDate(serialDayNumber);
+        return DayDateFactory.makeDate(toOrdinal() + days);
 
     }
 
@@ -259,7 +256,7 @@ public abstract class DayDate implements Comparable,
             adjust = -7 + Math.max(0, targetWeekday.toInt() - baseDOW.toInt());
         }
 
-        return DayDate.addDays(adjust, base);
+        return base.addDays(adjust);
 
     }
 
@@ -285,7 +282,7 @@ public abstract class DayDate implements Comparable,
             adjust = Math.max(0, targetWeekday.toInt() - baseDOW.toInt());
         }
 
-        return DayDate.addDays(adjust, base);
+        return base.addDays(adjust);
     }
 
     /**
@@ -307,7 +304,7 @@ public abstract class DayDate implements Comparable,
         if (adjust > 3)
             adjust -= 7;
 
-        return DayDate.addDays(adjust, base);
+        return base.addDays(adjust);
 
     }
 
@@ -385,7 +382,7 @@ public abstract class DayDate implements Comparable,
      *
      * @return the serial number for the date.
      */
-    public abstract int toSerial();
+    public abstract int toOrdinal();
 
     /**
      * Returns a java.util.Date.  Since java.util.Date has more precision than
